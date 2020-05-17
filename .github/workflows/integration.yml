@@ -1,0 +1,61 @@
+name: Integration Test
+on: [push , pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Python 3.6
+        id: python_setup
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.6"
+
+      - name: Check Out Repository
+        id: checkout_repository
+        uses: actions/checkout@master
+        with:
+          ref: ${{github.ref}}
+
+      - name: Docker Login
+        id: docker_login
+        uses: Azure/docker-login@v1
+        with:
+          username: ${{ secrets.DOCKERUSERNAME }}
+          password: ${{ secrets.DOCKERPASSWORD }}
+          login-server: https://index.docker.io/v1/
+
+      - name: Build Docker images
+        id: docker_build
+        uses: docker/build-push-action@v1.1.0
+        with:
+          # Docker repository to tag the image with
+          repository: mlspeclib/mlspeclib-action-sample-process-data
+          tag_with_ref: True
+          tag_with_sha: True
+          push: False
+
+#      - name: Debugging with tmate
+#        id: tmate_debugging
+#        env:
+#          INPUT_METASTORE_CREDENTIALS: ${{ secrets.METASTORE_CREDENTIALS }}
+#        uses: mxschmitt/action-tmate@v2
+
+      - name: Test Image
+        id: test_image_e2e
+        env:
+          INPUT_METASTORE_CREDENTIALS: '${{ secrets.METASTORE_CREDENTIALS }}'
+        run: |
+          python3 -m pip install --user --upgrade setuptools wheel
+          python3 -m pip install pipenv
+          python3 -m pipenv install -r requirements.txt
+          python3 -m pipenv run python3 -m unittest integration/test_e2e_integration.py
+
+      - name: Build Docker images
+        id: push_docker_images
+        uses: docker/build-push-action@v1.1.0
+        with:
+          # Docker repository to tag the image with
+          repository: mlspeclib/mlspeclib-action-sample-process-data
+          tag_with_ref: True
+          tag_with_sha: True
+          push: False
