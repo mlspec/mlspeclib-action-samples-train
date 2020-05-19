@@ -60,7 +60,14 @@ class E2ETester(unittest.TestCase):
 
         MLSchema.append_schema_to_registry(Path(schemas_dir_name))
 
-        workflow_dict = YAML.safe_load(YAML.safe_dump(parameters.get("INPUT_workflow")))
+        workflow_input = parameters.get("INPUT_workflow")
+
+        if isinstance(workflow_input, dict):
+            workflow_string = YAML.safe_dump(workflow_input)
+        else:
+            workflow_string = workflow_input
+
+        workflow_dict = YAML.safe_load(workflow_string)
         workflow_dict["workflow_version"] = workflow_version
         workflow_dict["run_id"] = str(uuid.uuid4())
         parameters["GITHUB_RUN_ID"] = workflow_dict["run_id"]

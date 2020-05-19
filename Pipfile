@@ -1,0 +1,28 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+flake8 = "*"
+ipython = "*"
+black = "*"
+pylint = "*"
+
+[packages]
+aenum = "*"
+gremlinpython = "*"
+marshmallow = "*"
+python-box = "*"
+semver = "*"
+PyMySQL = "*"
+PyYAML = "*"
+msgpack = "*"
+mlspeclib = "*"
+toml = "*"
+
+[requires]
+python_version = "3.6"
+
+[pipenv]
+allow_prereleases = true

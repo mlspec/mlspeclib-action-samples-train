@@ -43,7 +43,18 @@ INPUT_workflow:
       output:
         schema_type: training_result
         schema_version: 999.0.1
-INPUT_input_parameters:
+    package:
+      previous: train
+      input:
+        schema_type: training_result
+        schema_version: 999.0.1
+      execution:
+        schema_type: package_run
+        schema_version: 999.0.1
+      output:
+        schema_type: package_result
+        schema_version: 999.0.1
+  INPUT_input_parameters:
   schema_version: 999.0.1
   schema_type: data_source
   run_id: 6a9a5931-1c1d-47cc-aaf3-ad8b03f70575
