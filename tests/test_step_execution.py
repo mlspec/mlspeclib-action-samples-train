@@ -9,6 +9,7 @@ from mlspeclib import MLObject, MLSchema
 import unittest
 
 sys.path.append(str(Path.cwd().parent))
+sys.path.append(str(Path.cwd()))
 
 from step_execution import StepExecution
 from utils import verify_result_contract, setupLogger
@@ -35,9 +36,9 @@ class StepExecutionTester(unittest.TestCase):
         }
 
         # THESE SHOULD BE THE ONLY SETTINGS FOR THIS FILE
-        step_name = "process_data"
-        expected_results_schema_type = "data_result"  # MUST BE A LOADED SCHEMA
-        expected_results_schema_version = "0.0.1"  # MUST BE A SEMVER
+        step_name = "train"
+        expected_results_schema_type = "training_result"  # MUST BE A LOADED SCHEMA
+        expected_results_schema_version = "500.0.1"  # MUST BE A SEMVER
 
         step_execution_object = StepExecution(input_parameters, execution_parameters)
 

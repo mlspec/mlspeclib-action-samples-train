@@ -19,6 +19,14 @@ schema_type:
   type: string
   required: True
 
+base_image:
+  type: string
+  required: True
+
+machine_type:
+  type: string
+  required: True
+  
 nodes:
   type: int
   required: True
@@ -28,7 +36,7 @@ cpu_per_node:
   required: True
 
 ram_per_node:
-  type: int
+  type: string
   required: True
 
 gpu_required:
@@ -60,7 +68,7 @@ training_params:
       required: True
     train_op:
       type: string
-      required: True
+      required: False
     other_tags:
       type: dict
       required: True

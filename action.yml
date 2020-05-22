@@ -20,7 +20,7 @@ inputs:
   step_name:
     description: "Name for this step referenced in the workflow."
     required: true
-    default: "process_data"
+    default: "train"
   workflow_node_id:
     description: "Workflow to load from the database."
     required: true

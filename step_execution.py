@@ -1,7 +1,7 @@
 import logging
 from mlspeclib import MLObject
-from pathlib import Path
-
+import uuid
+from random import randrange
 
 # Making this a class in case we want sub functions.
 class StepExecution:
@@ -34,15 +34,15 @@ class StepExecution:
 
         # Mocked up results
         return_dict = {
-            "data_output_path": str(Path("tests/data/data_output.csv")),
-            "data_statistics_path": str(Path("tests/data/data_stats.csv")),
-            "data_schemas_path": str(Path("tests/data/data_schemas.yaml")),
-            "feature_file_path": str(Path("tests/data/feature_file.yaml")),
+            "training_execution_id": uuid.uuid4(),
+            "accuracy": float(f"{randrange(93000,99999)/100000}"),
+            "global_step": int(f"{randrange(50,150) * 100}"),
+            "loss": float(f"{randrange(10000,99999)/1000000}")
         }
 
-        results_object.data_output_path = return_dict["data_output_path"]
-        results_object.data_statistics_path = return_dict["data_statistics_path"]
-        results_object.data_schemas_path = return_dict["data_schemas_path"]
-        results_object.feature_file_path = return_dict["feature_file_path"]
+        results_object.training_execution_id = return_dict["training_execution_id"]
+        results_object.accuracy = return_dict["accuracy"]
+        results_object.global_step = return_dict["global_step"]
+        results_object.loss = return_dict["loss"]
 
         return results_object
