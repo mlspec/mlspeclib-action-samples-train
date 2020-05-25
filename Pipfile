@@ -9,7 +9,6 @@ ipython = "*"
 black = "*"
 
 [packages]
-aenum = "*"
 gremlinpython = "*"
 marshmallow = "*"
 python-box = "*"
