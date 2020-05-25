@@ -6,7 +6,7 @@ INPUT_container_repo_name: mlspec
 INPUT_container_name: mlspeclib-action-samples-train:latest
 INPUT_parameters_directory: '/src/parameters'
 INPUT_schemas_directory: '/src/parameters/test_schemas'
-INPUT_execution_parameters:
+INPUT_execution_parameters_raw:
   schema_version: 999.0.1
   nodes: 8
   cpu_per_node: 8
@@ -64,7 +64,7 @@ INPUT_workflow:
       output:
         schema_type: package_result
         schema_version: 999.0.1
-INPUT_input_parameters:
+INPUT_input_parameters_raw:
   schema_version: 999.0.1
   schema_type: data_result
   run_id: 6a9a5931-1c1d-47cc-aaf3-ad8b03f70575
