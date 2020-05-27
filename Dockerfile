@@ -1,4 +1,4 @@
-FROM mlspec/mlspeclib-action-docker@sha256:fcec947e2d38c7045bdffffa1b535c498a54b33e93e96b0058a154e3adf59c54
+FROM mlspec/mlspeclib-action-docker@sha256:b10b30184f8babf655a6351aa88961ee74a5fb61b1e4263f68543117b5f5a51c
 
 RUN apt-get -y update && apt-get -y install python3-all python3-pip
 
