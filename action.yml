@@ -1,4 +1,4 @@
-name: "MLSpec Sample Action - Process Data"
+name: "MLSpec Sample Action - Train"
 description: "Sample Action Example: Processing Data"
 author: "aronchick"
 inputs:
