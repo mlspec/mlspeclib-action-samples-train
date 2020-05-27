@@ -9,8 +9,9 @@ git commit -a -m 'updating requirements'
 git push
 
 docker build --no-cache -t $CONTAINER_NAME .
+docker push $CONTAINER_NAME
+
 python3 -m unittest tests/test*
 python3 -m unittest integration/test*
 
-docker push $CONTAINER_NAME
 
