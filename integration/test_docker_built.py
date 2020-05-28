@@ -16,10 +16,10 @@ class DockerBuildTester(unittest.TestCase):
 
     def test_docker_build(self):
         repo_name = os.environ.get(
-            "INPUT_repo_name", "mlspec"
+            "INPUT_REPO_NAME", "mlspec"
         )
         container_name = os.environ.get(
-            "INPUT_container_name", "mlspeclib-action-samples-process-data"
+            "INPUT_CONTAINER_NAME", "mlspeclib-action-samples-process-data"
         )
         exec_statement = ["docker", "run", f"{repo_name}/{container_name}:latest"]
         # p = subprocess.Popen(["docker"])
@@ -30,7 +30,7 @@ class DockerBuildTester(unittest.TestCase):
         )
         out, err = p.communicate()
         self.rootLogger.debug(f"error = {str(err)}")
-        self.assertTrue("ConfigurationException" in str(err))
+        self.assertTrue("ValueError" in str(err))
 
 
 if __name__ == "__main__":

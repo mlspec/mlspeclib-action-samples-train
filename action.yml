@@ -5,6 +5,49 @@ inputs:
   METASTORE_CREDENTIALS:
     description: "Some text"
     required: true
+  WORKFLOW_NODE_ID:
+    description: "Some text"
+    required: true
+  STEP_NAME:
+    description: "Some text"
+    required: true
+  SCHEMAS_DIRECTORY:
+    description: "Some text"
+    required: true
+    default: ".parameters/schemas"
+  SCHEMAS_GIT_URL:
+    description: "Some text"
+    required: false
+  PREVIOUS_STEP_NAME:
+    description: "Some text"
+    required: false
+  NEXT_STEP_NAME:
+    description: "Some text"
+    required: false
+  INPUT_PARAMETERS_RAW:
+    description: "Some text"
+    required: false
+  INPUT_PARAMETERS_BASE64:
+    description: "Some text"
+    required: false
+  INPUT_PARAMETERS_NODE_ID:
+    description: "Some text"
+    required: false
+  INPUT_PARAMETERS_FILE_PATH:
+    description: "Some text"
+    required: false
+  EXECUTION_PARAMETERS_RAW:
+    description: "Some text"
+    required: false
+  EXECUTION_PARAMETERS_BASE64:
+    description: "Some text"
+    required: false
+  EXECUTION_PARAMETERS_NODE_ID:
+    description: "Some text"
+    required: false
+  EXECUTION_PARAMETERS_FILE_PATH:
+    description: "Some text"
+    required: false
 branding:
   icon: "chevron-up"
   color: "blue"

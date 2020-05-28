@@ -9,7 +9,6 @@ from mlspeclib import MLObject, MLSchema
 import unittest
 
 sys.path.append(str(Path.cwd().parent))
-sys.path.append(str(Path.cwd()))
 
 from step_execution import StepExecution
 from utils import verify_result_contract, setupLogger

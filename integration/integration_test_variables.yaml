@@ -1,12 +1,12 @@
 # Integration test variables
-INPUT_integration_tests_schemas_dir_name: 'integration/.parameters/schemas'
+INPUT_INTEGRATION_TESTS_SCHEMAS_DIR_NAME: 'integration/.parameters/schemas'
 
 # Variables to hand to the docker container to mock up a real run
-INPUT_container_repo_name: mlspec
-INPUT_container_name: mlspeclib-action-samples-train:latest
-INPUT_parameters_directory: '/src/parameters'
-INPUT_schemas_directory: '/src/parameters/test_schemas'
-INPUT_execution_parameters_raw:
+INPUT_CONTAINER_REPO_NAME: mlspec
+INPUT_CONTAINER_NAME: mlspeclib-action-samples-train:latest
+INPUT_PARAMETERS_DIRECTORY: '/src/parameters'
+INPUT_SCHEMAS_DIRECTORY: '/src/parameters/test_schemas'
+INPUT_EXECUTION_PARAMETERS_RAW:
   schema_version: 999.0.1
   nodes: 8
   cpu_per_node: 8
@@ -25,8 +25,8 @@ INPUT_execution_parameters_raw:
   schema_type: training_run
   base_image: ubuntu1804
   machine_type: NDv2
-INPUT_step_name: 'train'
-INPUT_workflow:
+INPUT_STEP_NAME: 'train'
+INPUT_WORKFLOW:
   schema_type: workflow
   schema_version: 999.0.1
   steps:
@@ -64,7 +64,7 @@ INPUT_workflow:
       output:
         schema_type: package_result
         schema_version: 999.0.1
-INPUT_input_parameters_raw:
+INPUT_INPUT_PARAMETERS_RAW:
   schema_version: 999.0.1
   schema_type: data_result
   run_id: 6a9a5931-1c1d-47cc-aaf3-ad8b03f70575
