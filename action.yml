@@ -48,9 +48,20 @@ inputs:
   EXECUTION_PARAMETERS_FILE_PATH:
     description: "Some text"
     required: false
+  output:
+    output_base64_encoded:
+      description: "Some text"
+    input_node_id:
+      description: "Some text"
+    execution_node_id:
+      description: "Some text"
+    output_node_id:
+      description: "Some text"
+    log_node_id:
+      description: "Some text"
 branding:
   icon: "chevron-up"
   color: "blue"
 runs: 
   using: 'docker'
-  image: 'docker://mlspec/mlspeclib-action-process-data@sha256:baf8c41403ec9252dd09d245492f0de18e5c60773235c919c61ee4533b443560'
+  image: 'docker://mlspec/mlspeclib-action-samples-train@sha256:c3ff9ec9fb2845e39b3ced0d26b10817d4226d7e23e9e0adba58d55b16b9d492'
