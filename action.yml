@@ -59,9 +59,10 @@ inputs:
       description: "Some text"
     log_node_id:
       description: "Some text"
+  
 branding:
   icon: "chevron-up"
   color: "blue"
 runs: 
   using: 'docker'
-  image: 'docker://mlspec/mlspeclib-action-samples-train@sha256:c3ff9ec9fb2845e39b3ced0d26b10817d4226d7e23e9e0adba58d55b16b9d492'
+  image: 'docker://mlspec/mlspeclib-action-samples-train@sha256:d79f75b0ee59656ac3c8d9c637e2e7b23b7f080eaf5b794923245ae5b50ccf19'
