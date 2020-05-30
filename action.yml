@@ -59,7 +59,7 @@ inputs:
       description: "Some text"
     log_node_id:
       description: "Some text"
-  
+
 branding:
   icon: "chevron-up"
   color: "blue"
