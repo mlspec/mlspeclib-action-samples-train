@@ -41,17 +41,17 @@ The goal of Project Jupyter ([Project Jupyter | Home](https://jupyter.org/)) is 
 The Jupyter Notebook is based on a set of open standards for interactive computing. These open standards can be leveraged by third party developers to build customized applications with embedded interactive computing. 
 
 Through the work of the Jupyter team, since 2006, the community has created a set of tools that enable technologists across the technological skill spectrum to simply engage with data, data science and machine learning. A subset of these tools include (below is a non-exhaustive list - for more info read ([here](https://jupyter.org/documentation))):
- - the core ([Jupyter Notebook Experience](https://jupyter-notebook.readthedocs.io/en/stable/)) (the visual experience in a browser)
- - [JupyterHub](https://jupyter.org/hub))
- - [Jupyter Console](https://jupyter-console.readthedocs.io/en/stable/))
- - [IPython](https://ipython.readthedocs.io/en/stable/))
- - [.ipynb Notebook format](https://nbformat.readthedocs.io/en/latest/format_description.html))
- - [Jupyter kernel communication protocol](https://jupyter-client.readthedocs.io/en/latest/))
- - [Binder & MyBinder.org](https://mybinder.org/))
- - [nbviewer](https://nbviewer.jupyter.org/)]
- - [nbformat](https://nbformat.readthedocs.io/en/latest/))
- - [nbconvert](https://nbviewer.jupyter.org/)]
- - [repo2docker](https://github.com/jupyter/repo2docker))
+ - the core ([Jupyter Notebook Experience](https://jupyter-notebook.readthedocs.io/en/stable/) (the visual experience in a browser)
+ - [JupyterHub](https://jupyter.org/hub)
+ - [Jupyter Console](https://jupyter-console.readthedocs.io/en/stable/)
+ - [IPython](https://ipython.readthedocs.io/en/stable/)
+ - [.ipynb Notebook format](https://nbformat.readthedocs.io/en/latest/format_description.html)
+ - [Jupyter kernel communication protocol](https://jupyter-client.readthedocs.io/en/latest/)
+ - [Binder & MyBinder.org](https://mybinder.org/)
+ - [nbviewer](https://nbviewer.jupyter.org/)
+ - [nbformat](https://nbformat.readthedocs.io/en/latest/)
+ - [nbconvert](https://nbviewer.jupyter.org/)
+ - [repo2docker](https://github.com/jupyter/repo2docker)
 
 Additionally a large set of third party tools have been created to extend the usage for specific scenarios. These include:
  - [nbdime](https://github.com/jupyter/nbdime)
