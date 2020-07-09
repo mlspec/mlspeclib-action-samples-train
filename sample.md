@@ -112,6 +112,10 @@ There are a significant number of data scientists that use text-based workflows 
 
 The IPython notebook initiative, which evolved into Jupyter notebooks, [originally provided](http://blog.fperez.org/2012/01/ipython-notebook-historical.html) an interactive notebook style user interface to the IPython environment to support interactive computation research. Since then, the user community around Jupyter notebooks has grown considerably and now includes, but is not limited to, several distinct practice areas:
 
+<!--
+The pipelines are used at universities who are teaching at scale especially those that are teaching data science, grading, integrating to LMS/records systems, etc.
+-->
+
 *   Data Science / Machine Learning
     *   Local/offline experimentation
     *   Producing production models 
@@ -120,6 +124,26 @@ The IPython notebook initiative, which evolved into Jupyter notebooks, [original
     *   Open science communication and review
     *   lecture notebooks, workshop tutorials, etc [[https://github.com/search?l=Jupyter+Notebook&q=lecture+notes&type=Repositories](https://github.com/search?l=Jupyter+Notebook&q=lecture+notes&type=Repositories)]
     *   Etc
+
+<!--
+I'm wary of commenting too much here because I'm not sure this is in scope for the suggested format... Maybe a thread on the discourse forum then bring back anything relevant here?
+
+That said, by publishers, I mean eg academics who want to create and distribute:
+
+- interactive lecture notes and tutorials; and/or
+- interactive research publications.
+
+In a sense, the aim is to produced finished works whose publication format is the rendered notebook. (This means that when viewing and editing the work you may need to install all the notebook extensions that tweak the UI so it's viewed as intended.)
+
+Diffing and commenting are often required in several different ways:
+
+1) during production, eg when there are multiple authors working on a publication, or when an author hands over to an edit who wants to communicate suggested edits back to the author(s);
+
+2) during open review (eg if a paper is offered as a preprint and you are likely to want to solicit comments) or publication (promoting discussion via comments);
+
+If used for instruction, notebooks are increasingly also used for assessment (eg using things like nbgrader or just by exchange of notebooks); for a marker/grader, they may want to diff a notebook to see what the student has done compared to the originally provided assessment notebook; the marker may then want to comment and annotate the notebook and give it back to the student, who needs to clearly see what marker has added.
+
+-->
 *   Data Engineering
     *   Defining reproducible tasks for parameterized extract, transform, or load operations
     *   Recording data movement operations in a way that’s easily modified and rerun for particular parameterizations when an error occurs
@@ -148,7 +172,15 @@ The IPython notebook initiative, which evolved into Jupyter notebooks, [original
 
 ## File Comparison
 
+<!--
+Can we dig into what it would mean to make jupytext more "core"? Also, why this is an issue for other institutions to adopt it or not? For me, it's pretty straightforward to pip-install jupytext and it integrates nicely with the jupyter interfaces etc
+-->
+
 At the core of our effort is the mechanism by which most users compare files. The issues with diffing notebooks, many of which have already been identified in [JEP 08](https://github.com/jupyter/enhancement-proposals/blob/master/08-notebook-diff/notebook-diff.md) include diffing "input" content in the context of the document format (JSON) and diffing output or embedded content (cell outputs, media content embedded in markdown cells). While ``nbdime`` does provide an excellent solution for some, it unfortunately uses a non-standard mechanism for diffing that makes it difficult to integrate with most other common tools (e.g. `diff` and `patch`). Additionally, as `diff` and `patch` are included in many applications (as an embedded tool) or hosted workflows (e.g. GitLab, GitHub, Mercurial), it will be challenging to augment those solutions with an additional tool in order to unlock a better experience.
+
+<!--
+nbdime is indeed meant to be general tooling for improving workflows for version control, which is why it’s implemented with the standard Git API for diff extensions. What we have now is targeted at human diff viewing and not roundtripping to line-based diffs, since we figured that line-based diff tools already covered that (as well as they can for JSON in general). But if there is a reasonable case to output a different line-based diff to work with particular tooling scenarios, that would be in-scope for nbdime. One of the key use case challenges we face and try to address in nbdime is that different folks want to see diffs of different things at different times (metadata, output, etc.). That makes it hard to say what folks want to see in a diff in general because there isn’t just one answer. But if you take line-based diffs as a constraint you can do other things to accomplish similar tasks, such as group the patches differently (input first, metadata second, outputs last; I don’t think patch specifies that they must be in order). Making a new serialization format of the same information focused on line-based tooling takes a similar approach, but does so at storage/edit time instead of diff time, with the big advantage of needing no plugins. This is true whether it’s accomplished by shifting output to the end of the file as Chris has suggested, or a separate file, as can be done with jupytext.
+-->
 
 If we were able to offer an optional file format that supports line-based comparison allows users to use ``diff`` and ``patch``, we would unlock a number of new sceraios. ``diff`` and ``patch`` are available in every default server installation meaning no further installation would be required. Line level comparison is the standard in the GNU/Linux ecosystem and supporting a file format that can be diff’d in a line-level way will unlock thousands of tools and workflows. That is to say, even if someone does not use ``diff`` or ``patch``, if they need to do any sort of comparisons of files, it is likely they understand the standard ``patch`` format. Some common scenarios that would be unlocked include:
 
@@ -158,6 +190,17 @@ If we were able to offer an optional file format that supports line-based compar
 *   Any service that expects file format support of this kind
 
 Though ``nbdime`` supports a subset of these experiences for Jupyter notebooks, there are few other tools that support the ``nbdime`` patch-format for the same use-case. 
+
+<!--
+Having two persist executable formats risks community fracturing. You don't have two Dockerfile formats, or two java jar formats, even though those have tooling issues that require extra command pipes to inter-operate with other standard commands. And the root reason is that the concerns and solutions will deviate over time for different formats making the overall project harder and harder to maintain and build ontop of. It doesn't matter if it's optional or not for this concern. Matter of fact I'd prefer it be more an all or nothing, moving future specs to a new base protocol format or leave the procotol as is. Have one pattern with some edge cases handled less well, not two that optimize for specific instances is a pretty common guiding principle in system design.
+
+Additionally it feels like we're pushing Jupyter to reorient itself to native git commands when JSON's a common file format for tons of other projects. And there's lots of tooling for JSON diff / patch generically (here's the first three from googling): https://github.com/andreyvit/json-diff https://github.com/zgrossbart/jdd https://github.com/benjamine/jsondiffpatch
+Yes those have their own issues concerns or problem they aren't solving, but the point is that I feel we skipped right past "make better tools to bridge ecosystems" and went to "redesign a major aspect of a mature project".
+
+The very long thread on discourse may have given the impression that most everyone was happy with a format change, but I think the reserved concerns around what problem are we solving here, and is this the best change to make in order to solve that problem were difficult to see / express with all the noise of combined voices.
+
+I agree - I wish that in this comment (https://discourse.jupyter.org/t/jupyter-and-github-alternative-file-format/4972/32?u=choldgraf) I had placed more emphasis on the first item, and also scoped it outside of GitHub's specific use-case. I think "improve tooling and bridges to make people's live better" is an important first step, and we should exhaust these options before we start creating new formats (or changing pre-existing ones). I think there is a lot of low-hanging fruit there that we can improve upon that would be much less-disruptive.
+-->
 
 A further challenge for comparing notebook files line by line or in a text based medium is that notebooks contain rich media contents like images, videos, animations or even small GUI applications. This content is an essential part of a notebook but showing a meaningful diff in a terminal is challenging. Solving this for the new file format is necessary before it could be accepted by the community. 
 
@@ -193,6 +236,16 @@ TODO: add a use-case of an individual person using jupyter notebooks locally, al
     *   Amal saves the file to their shared SMB share. 
     *   Madhuri opens the file from the share using Jupyter > Open. Everything appears exactly as it did with the `.ipynb` format. 
     *   Madhuri has some tooling built around the existing notebook format (`.ipynb`), so she removes the configuration setting at the top of the file, and it continues to work properly. 
+
+<!--
+It's not actually a part of the Jupyter spec / github, and there was no JEP (that I could find) to accept it as a standard. It's an experiment on things that can be done, not an generally accepted path forward for how to build Jupyter documents. (Correct me if I'm off base here). Which is totally fine but not a general replacement for `ipynb` files. There's also the occasional "why doesn't this work with jupytext in other project issues" and while not a huge maintenance burden it does add up and is a non-trivial risk for reliability with adding a 2nd experiment or a 2nd format. I'd like to see a Risks Section and be very clear about the implementation and tooling burden these choices would have, or you may see a split of repos that do and don't support the format change over the next year or two without maintainer inputs.
+
+yeah I totally agree there - Jupytext is "just another project out there", it's nothing specific to Jupyter's governance processes. I see this approach as more like "don't change the underlying formats or do anything 'official', just improve the documentation around workflows that already exist, and potential build tooling that facilitates those workflows"
+
+One thing that jupytext shows is how innovation can be applied around the open ipynb standard (is ipynb actually a standard yet?!). It extends what's possible for users who aren't necessarily interested in preserving cell outputs, and it may gain a user base of folk who use that document type as their primary document type (maybe with a paired hidden ipynb doc for rendering outputs in the notebook UI). If I don't have a jupyter server to hand, I can trivially write a markdown or py doc and know that I can later open it in a Jupyter notebook UI as a notebook. There have been a lot of attempts at jupyter-md etc over the years and Jupytext seems to be the one that has gained traction (eg positive signs based on Github fork/star/watch/used by/contributor counts).
+Jupytext also provides a pragmatic attempt by a community developer to address the need for a text format. It didn't require permission and didn't try to force any changes on Jupyter standards.
+-->
+
 *   Amal is ready to contribute the file to the repo. She goes into the command line and, using standard git commands, adds and commits the notebook to her repo.
 *   Amal decides to change a hyperparameter.
     *   She creates a branch locally, and  opens the notebook in that branch.
@@ -238,6 +291,12 @@ Tools to consider compatibility with as we move forward:
 
 *   Using the new notebook format is optional. A user that chooses the new format will have 100% similar functionality with the old format. When interacting with any of the core Jupyter tools, they will not experience any difference.
 *   The format is 100% round-trippable to .ipynb. That’s not to say that all functionality in the new format will work in .ipynb, but 100% of .ipynb functions will work in the new format. Non-functional items will be preserved intact.
+
+<!--
+> So no DATA is lost, but no guarantees about functionality.
+I agree with Chris that this sounds like it'll lead to fractured functionality and tools that can't work with one format or the other over time. I'd be more ok with 5.0 format uses .nnf and ipynb is for < 4.4. Choose one or the other based on the version of the spec being supported so the expectation would be all new tools use the new format when respecting new jupyter capabiltiies.
+-->
+
 *   Supporting `diff` and `patch` so that tools that embed these tools will function
 *   Users with the existing format will continue to have a first class experience and will never be forced to upgrade to the new format without their explicit consent
 
@@ -246,6 +305,29 @@ Tools to consider compatibility with as we move forward:
 _To be done_
 
 # Options Under Consideration
+
+<!--
+I think another option should be considered, which is: do nothing in the Jupyter core ecosystem, and see if this problem can be improved with documentation and improvements to pre-existing tools.
+
+I say this for two reasons:
+
+1. IMO this should always be the first option of choice for any technical decision, and pursuing new tech should only ever happen when this option's possibilities have been fully-explored and still won't meet our needs.
+2. Many of the things we've described in this JEP already exist. You can already have two-way synchronization between a text-based notebook and an ipynb file with Jupytext. There's even UI to activate this "pairing" so that it will automatically save an ipynb file to [.py/myst-markdown/pandoc markdown/etc]. The only thing that is missing there is what to do with the outputs, but that's also something that I know Jupytext would like to support as well. From the perspective of GitHub, you could imagine recommending a workflow like "if you want text-based diffing for notebooks, we recommend you use jupytext to pair your ipynb files with a text-based version of them. in your PRs, make comments, edits, etc to the text-based versions." You could even imagine GitHub treating a paired ipynb and text-based file in a special way. E.g.: "if in a PR, two files are detected with jupytext metadata that links them, then in the diff only show the text file, and in the "enriched view" only show the notebook file.
+
+
+My biggest gripe with jupytext is that you need to maintain 2 files. Since Jupytext, once it handles outputs, will have all the information needed for round trip to ipynb, why do we need ipynb any more? Let's just use jupytext format for everything. That's the idea.
+
+I think this gets to the question of trade-offs. If there is a text-based format that has all of the outputs in the format itself, is compatible with jupytext and round-trippable with ipynb, and is also much easier for humans to read, diff, etc, then sure I think this makes sense. But, I don't know if that perfect balance exists. My gut feeling is that if you try to put outputs and metadata in a text file, you'll quickly run into the same challenges we have with ipynb.
+
+Also, I think it's worth highlighting the first bias that I mention above - we should always try to re-use pre-existing community infrastructure as much as possible before we create something new. Even if you ultimately do create something new, the experience gained from operating within the tools that the community already knows and uses will help make the end-result much better
+
+I agree we won't get to a point when it's perfectly readable, but I do think we can get to a point when, at least code blocks and some output blocks, will be easier to handle in text manner. Problem with json is how nested it is and how poorly it handles multi-line strings. I mean, codeblocs are list of lines right now, that's hard to comprehend if you try to figure out, say, indentations. If we make it multi-line block of code, readability improves immediately. There was argument that even yaml is better than json, and that's true. Problem with yaml is that we're getting into nest-fest and distinction between python nesting and yaml nesting is next to impossible to visually determine. That's why format I'm thinking of and prototyping here https://github.com/machine-learning-apps/mystify/blob/main/examples/example_notebook.mystnb is mixture of few things:
+1. inputs are as readable as I could get, so no nesting, multi line, pretty much clear python that you just need to copy-paste to run
+2. blocks of output are readable when possible, but ofc things like figures will be blocks of incomprehensible gibberish. That's ok, as reviewer I simply wont even try to parse it.
+3. metadata is clearly separated from input/output and stored in yaml, we may as well do it in json, but I think yaml is more readable. With json we could have 1 liner with all the metadata, which would make conflict resolution both easy and hard depending whether or not you want to understand what you're resolving.
+
+This is obviously WIP, but I hope it shows direction I'm going for. I'll work on complex cases, including figures, next week
+-->
 
 ## Improve this by creating a new storage format
 
@@ -344,7 +426,7 @@ This section is intended to encourage you as an author to think about the lesson
 *   [A twitter thread/responses with lots of opinions about YAML vs. JSON](https://twitter.com/choldgraf/status/1280181444866748421)
 *   [A blog post from Matthias about YAML-based notebooks](https://matthiasbussonnier.com/posts/05-YAML%20Notebook/)
 
-# Guide-level explanation¶
+# Guide-level explanation
 
 Explain the proposal as if it was already implemented and you were explaining it to another community member. That generally means:
 
@@ -395,6 +477,10 @@ Providers that build UIs on top of git could add support in the following way
 *   Upstream recommendations to other tools (e.g. GitHub) - GitHub presents a warning that says "if you want text-based diffing for notebooks, we recommend you use jupytext to pair your ipynb files with a text-based version of them. in your PRs, make comments, edits, etc to the text-based versions." 
 *   GitHub further treats a paired ipynb and text-based file in a special way. E.g.: "if in a PR, two files are detected with jupytext metadata that links them, then in the diff only show the text file, and in the "enriched view" only show the notebook file.
 
+<!--
+For the sake of exploration. What if nbdime had a command to map the rendered outputs back to lines / opscodes? Say your text format was introduced as purely a diff format and we extended nbdime or something like it to render the proposed human readable diff that could map 1:1 back to the lines in the original file to generate opscodes. No persistence of a new format, but a schema for diff / patch friendly format. This would give the ability to choose what's important to render in a given context, while allowing for classic patch file generation for the raw source and without any tooling changes for 90% of the jupyter ecosystem. I can capture this idea in a section if we wanted to flush out what it Could be before rules it out or deciding something along those lines is workable.
+-->
+
 #### Potential challenge here
 *   Scenario
     *   2 data scientists work on same notebook using git.
@@ -441,6 +527,10 @@ nbdiff Untitled.ipynb (HEAD) Untitled.ipynb
 -  print('hi')
 +  print('there')
 ```
+
+<!--
+What about adding examples for more realistic edits? Mostly because the single line example doesn't motivate why a basic diff doesn't cut it :) I'd keep the single line diff example to give people a simple example to look at but also include one with a more complex diff to illustrate (or not) how well a line based diff works.
+-->
 
 ### Improve online products for diffing/merging ipynb files
 
