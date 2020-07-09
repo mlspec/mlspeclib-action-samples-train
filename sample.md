@@ -325,9 +325,7 @@ This section is intended to encourage you as an author to think about the lesson
 |Project|OSS & >50% of contrib from community|Diff technique|Git ‘friendly’*?|Supports outputs in the same file?|Additional features|Rejected/Reason?|
 |Jupyter Notebook|Yes|Use nbdime|No|Yes|||
 |MyST Notebook|Yes||Yes|No|Works well with Sphinx & Jupyter Book (references, bibliography)||
-|Jupytext Markdown|Yes||Yes|No|Well rendered by GitHub / VS Code /  \
- \
-See e.g. https://github.com/plotly/plotly.py/tree/doc-prod/doc/python||
+|Jupytext Markdown|Yes||Yes|No|Well rendered by GitHub / VS Code See e.g. https://github.com/plotly/plotly.py/tree/doc-prod/doc/python||
 |Percent scripts|Yes||Yes|No|Notebooks as scripts. Work well in VS Code, PyCharm Pro, Spyder, Hydrogen, and also with tools like black, etc.||
 |jupyter -format|Yes||||||
 |MatLab|No||||||
