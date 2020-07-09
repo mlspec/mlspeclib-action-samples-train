@@ -65,7 +65,7 @@ Additionally a large set of third party tools have been created to extend the us
 The Jupyter Notebook Format is an open standard which has existed for a number of years. The 2017 ACM Software System Award recognized Jupyter for: [https://awards.acm.org/award_winners/perez_9039634#2017-acm-software-system-award](https://awards.acm.org/award_winners/perez_9039634#2017-acm-software-system-award)
 
 
-    _For Project Jupyter, a broad collaboration that develops open-source tools for interactive computing, with a language-agnostic design. These tools, that include IPython, the Jupyter Notebook and JupyterHub, have become a de facto standard for data analysis in research, education, journalism, and industry._
+For Project Jupyter, a broad collaboration that develops open-source tools for interactive computing, with a language-agnostic design. These tools, that include IPython, the Jupyter Notebook and JupyterHub, have become a de facto standard for data analysis in research, education, journalism, and industry._
 
 
 ## The Jupyter Notebook Format
