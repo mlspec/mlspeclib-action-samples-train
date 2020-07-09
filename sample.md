@@ -34,8 +34,7 @@ _To Be Done_
 The goal of Project Jupyter ([Project Jupyter | Home](https://jupyter.org/)) is to provide:
 
 
-### 
-    **Open Standards for Interactive Computing**
+### **Open Standards for Interactive Computing**
 
 
 #### 
